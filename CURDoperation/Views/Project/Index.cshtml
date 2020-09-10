@@ -1,0 +1,147 @@
+﻿@model CURDoperation.Models.ProjectDataViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("AddProject", "Project", FormMethod.Post, new
+{
+    enctype = "multipart/form-data"
+}))
+{
+    <div class="form-horizontal">
+        <h4></h4>
+        <div class="form-group">
+            @Html.HiddenFor(model => model.project.Id)
+
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.project.ProjectID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.project.ProjectID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.project.ProjectID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+           
+
+           
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.project.ProjectName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.project.ProjectName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.project.ProjectName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.project.DevelopementStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.project.DevelopementStartDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                    @Html.ValidationMessageFor(model => model.project.DevelopementStartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.project.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                   True
+                    @Html.RadioButtonFor(model => model.project.IsActive, "True", new { htmlAttributes = new { @class = "form-control" } })
+                    False
+                    @Html.RadioButtonFor(model => model.project.IsActive, "False", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+       
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.project.Projectlogo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <input type="file" name="project.file" required />  
+             <div class="col-md-10">
+                <br />
+            </div>
+        </div> 
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type = "submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="color:green">
+                @ViewBag.Message
+
+            </div>
+        </div>
+
+
+
+}
+
+<br />
+<br />
+
+<table class="table">
+    @if(Model.projectlist != null && Model.projectlist.Count> 0)
+{
+        <tr>
+
+            <th>
+               ProjectID
+            </th>
+            <th>
+                 ProjectName
+            </th>
+            <th>
+                IsActive
+            </th>
+            <th>
+                DevelopementStartDate
+            </th>
+            <th>
+                Projectlogo
+            </th>
+            
+            <th>
+                Action
+            </th>
+
+        </tr>
+        foreach (var item in Model.projectlist)
+    {
+        @Html.HiddenFor(model => item.ProjectID);
+            <tr>
+                              
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DevelopementStartDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Projectlogo)
+                    
+                </td>
+   
+                <td>
+                    @Html.ActionLink("Edit", "EditProject", new { id = item.ProjectID }) |
+                    @Html.ActionLink("Delete", "DeleteProject", new { id = item.ProjectID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+
+
+

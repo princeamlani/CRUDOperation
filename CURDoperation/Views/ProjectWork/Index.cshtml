@@ -1,0 +1,99 @@
+﻿
+@model CURDoperation.Models.ProjectWorkDataViewModel
+@{
+    ViewBag.Title = "";
+}
+@using (Html.BeginForm("AddPrjWork", "ProjectWork", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <h4></h4>
+        <div class="form-group">
+            @Html.HiddenFor(model => model.projectlist)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.prjtwork.ProjectID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.prjtwork.ProjectID, new SelectList(Model.projectlist, "ProjectID", "ProjectID"), "Select Project", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.prjtwork.ProjectID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.prjtwork.Work, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.prjtwork.Work, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.prjtwork.Work, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.prjtwork.IsCompleted, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    Yes
+                    @Html.RadioButtonFor(model => model.prjtwork.IsCompleted, "True", new { htmlAttributes = new { @class = "form-control" } })
+                    No
+                    @Html.RadioButtonFor(model => model.prjtwork.IsCompleted, "False", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" style="color:green">
+                    @ViewBag.Message
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<br />
+<br />
+
+<table class="table">
+    @if (Model.projectwrklist != null && Model.projectwrklist.Count > 0)
+    {
+        <tr>
+
+            <th>
+                ProjectID
+            </th>
+            <th>
+                Work
+            </th>
+            <th>
+                IsCompleted
+            </th>
+            
+           
+
+        </tr>
+        foreach (var item in Model.projectwrklist)
+        {
+            @Html.HiddenFor(model => item.ProjectWorkID);
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Work)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCompleted)
+                </td>
+               
+
+                @*<td>
+                    @Html.ActionLink("Edit", "EditProject", new { id = item.ProjectID }) |
+                    @Html.ActionLink("Delete", "DeleteProject", new { id = item.ProjectID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                </td>*@
+            </tr>
+        }
+    }
+</table>
+
+
